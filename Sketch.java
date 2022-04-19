@@ -1,6 +1,11 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
+  /**
+  * A program that uses an image as a background, animates an image that uses basic edge detection, and animates a shape that moves in a non-linear path.
+  * @author: B. Chan
+  */
+
 public class Sketch extends PApplet {
 	
   // Declare global image cariable
@@ -9,10 +14,15 @@ public class Sketch extends PApplet {
   
   float fltShellX = random(0, 1000);
   float fltShellY = random(0, 1000);
+  float fltCircleX = 25;
+  float fltCircleY = 475;
 
   // The amount that the x and y values increase or decrease by
-  float fltSpeedX = 10;
-  float fltSpeedY = 10;
+  float fltShSpeedX = 10;
+  float fltShSpeedY = 10;
+  float fltCSpeedX = 5;
+  float fltCSpeedY = 5;
+
   
   /**
    * Called once at the beginning of execution, put your size all in this method
@@ -31,7 +41,7 @@ public class Sketch extends PApplet {
     // Load images: Green shell and white background
     // Shell dimensions: 160 x 140
     imgShell = loadImage("shell.png"); 
-    imgBackground = loadImage("white.jpg");
+    imgBackground = loadImage("white.jpg");   
     
     }
 
@@ -47,32 +57,58 @@ public class Sketch extends PApplet {
     image(imgShell, fltShellX, fltShellY);
 
     // Animate Green Shell
-    fltShellX += fltSpeedX;
-    fltShellY += fltSpeedY;
+    fltShellX += fltShSpeedX;
+    fltShellY += fltShSpeedY;
 
     // if Shell touches right edge of screen, reverse X animation motion
     if (fltShellX >= 840) {
-      fltSpeedX = -fltSpeedX;
+      fltShSpeedX = -fltShSpeedX;
       fltShellX = 840;   
     } 
 
     // if Shell touches left edge of screen (x <= 0), change X animation motion and to opposite direction
     else if (fltShellX <= 0) {
-      fltSpeedX = -fltSpeedX;
+      fltShSpeedX = -fltShSpeedX;
       fltShellX = 0;
     }
 
     // if Shell touches top edge of screen, reverse Y animation motion
     if (fltShellY >= 860) {
-      fltSpeedY = -fltSpeedY;
+      fltShSpeedY = -fltShSpeedY;
       fltShellY = 860;
     }
 
     // if Shell touches bottom edge of screen (y <= 0), change Y animation motion and to opposite direction
     else if (fltShellY <= 0) {
-      fltSpeedY = -fltSpeedY;
+      fltShSpeedY = -fltShSpeedY;
       fltShellY = 0;
     }
+
+    // Draw Circle shape
+    fill(0, 0, 0);
+    ellipse(fltCircleX, fltCircleY, 50, 50);
+
+    // Animate Black Circle
+    fltCircleX += fltCSpeedX;
+    fltCircleY += fltCSpeedY;
+
+    // if Circle touches right edge of screen, reverse X animation motion
+    if (fltCircleX >= 975) {
+      fltCSpeedX = -fltCSpeedX;
+      fltCircleX = 975;   
+    } 
+
+    // if Circle touches left edge of screen (x <= 0), change X animation motion and to opposite direction
+    else if (fltCircleX <= 25) {
+      fltCSpeedX = -fltCSpeedX;
+      fltCircleX = 25;
+    }
+
+    // if Circle coordinate reaches mulltiple of 100, reverse Y animation motion to create zigzag path
+    if (fltCircleY % 100 == 0) {
+      fltCSpeedY = -fltCSpeedY;
+    }
+
   }
   
   // define other methods down here.
