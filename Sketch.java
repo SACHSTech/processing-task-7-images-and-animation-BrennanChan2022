@@ -2,7 +2,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
   /**
-  * A program that uses an image as a background, animates an image that uses basic edge detection, and animates a shape that moves in a non-linear path.
+  * A program that uses an image as a background, animates an image that uses basic edge detection, and animates a shape that moves in a parabolic path.
   * @author: B. Chan
   */
 
@@ -14,16 +14,16 @@ public class Sketch extends PApplet {
   
   float fltShellX = random(0, 1000);
   float fltShellY = random(0, 600);
-  float fltCircleX = 25;
-  float fltCircleY = 375;
+  float fltCircleX = 0;
+  float fltCircleY = 350;
 
   // The amount that the x and y values increase or decrease by
   float fltShSpeedX = 10;
   float fltShSpeedY = 10;
   float fltCSpeedX = 5;
   float fltCSpeedY = 5;
+  float ParabolaPath;
 
-  
   /**
    * Called once at the beginning of execution, put your size all in this method
    */
@@ -41,7 +41,7 @@ public class Sketch extends PApplet {
     // Load images: Green shell and white background
     // Shell dimensions: 160 x 140
     imgShell = loadImage("shell.png"); 
-    imgBackground = loadImage("white.jpg");   
+    imgBackground = loadImage("whitebackground.jpg");   
     
     }
 
@@ -50,7 +50,7 @@ public class Sketch extends PApplet {
    */
   public void draw() {
 	  
-    // Draw White background
+    // Draw White background using uploaded image
     image(imgBackground, 0, 0);
 
     // Draw Green Shell
@@ -88,22 +88,32 @@ public class Sketch extends PApplet {
     fill(0, 0, 0);
     ellipse(fltCircleX, fltCircleY, 50, 50);
 
-    // Animate Black Circle
+    // Parabola function that the circle will travel by
+    ParabolaPath = (float) Math.pow(fltCircleX - 500,2);
+    
+    fltCircleY = (ParabolaPath/400) + 25;
     fltCircleX += fltCSpeedX;
 
-    // if Circle touches right edge of screen, reverse X animation motion
+    // if Circle touches left edge of screen, change X and Y animation motion to reverse parabola path
     if (fltCircleX >= 975) {
       fltCSpeedX = -fltCSpeedX;
-      fltCircleX = 975;   
+      fltCircleX = 975;
+      fltCSpeedY = -fltCSpeedY;
     } 
 
-    // if Circle touches left edge of screen (x <= 0), change X animation motion and to opposite direction
+    // if Circle touches left edge of screen (x <= 25), change X and Y animation motion to revert to parabola path
     else if (fltCircleX <= 25) {
       fltCSpeedX = -fltCSpeedX;
       fltCircleX = 25;
+      fltCSpeedY = -fltCSpeedY;
+    }
+    
+    // if Circle touches bottom edge of screen, reverse Y animation motion
+    else if (fltCircleY >= 575) {
+      fltCSpeedY = -fltCSpeedY;
+      fltCircleY = 575;
     }
 
   }
-  
   // define other methods down here.
 }
