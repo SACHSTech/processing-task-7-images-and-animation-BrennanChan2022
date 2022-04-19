@@ -13,9 +13,9 @@ public class Sketch extends PApplet {
   PImage imgBackground;
   
   float fltShellX = random(0, 1000);
-  float fltShellY = random(0, 1000);
+  float fltShellY = random(0, 600);
   float fltCircleX = 25;
-  float fltCircleY = 475;
+  float fltCircleY = 375;
 
   // The amount that the x and y values increase or decrease by
   float fltShSpeedX = 10;
@@ -29,7 +29,7 @@ public class Sketch extends PApplet {
    */
   public void settings() {
 	// put your size call here
-    size(1000, 1000);
+    size(1000, 600);
   }
 
   /** 
@@ -72,13 +72,13 @@ public class Sketch extends PApplet {
       fltShellX = 0;
     }
 
-    // if Shell touches top edge of screen, reverse Y animation motion
-    if (fltShellY >= 860) {
+    // if Shell touches bottom edge of screen, reverse Y animation motion
+    if (fltShellY >= 460) {
       fltShSpeedY = -fltShSpeedY;
-      fltShellY = 860;
+      fltShellY = 460;
     }
 
-    // if Shell touches bottom edge of screen (y <= 0), change Y animation motion and to opposite direction
+    // if Shell touches top edge of screen (y <= 0), change Y animation motion and to opposite direction
     else if (fltShellY <= 0) {
       fltShSpeedY = -fltShSpeedY;
       fltShellY = 0;
@@ -90,7 +90,6 @@ public class Sketch extends PApplet {
 
     // Animate Black Circle
     fltCircleX += fltCSpeedX;
-    fltCircleY += fltCSpeedY;
 
     // if Circle touches right edge of screen, reverse X animation motion
     if (fltCircleX >= 975) {
@@ -102,11 +101,6 @@ public class Sketch extends PApplet {
     else if (fltCircleX <= 25) {
       fltCSpeedX = -fltCSpeedX;
       fltCircleX = 25;
-    }
-
-    // if Circle coordinate reaches mulltiple of 100, reverse Y animation motion to create zigzag path
-    if (fltCircleY % 100 == 0) {
-      fltCSpeedY = -fltCSpeedY;
     }
 
   }
